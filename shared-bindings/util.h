@@ -53,11 +53,17 @@ typedef struct {
     void        * module;
 } abstract_module_t;
 
+
+inline  abstract_module_t * new_abstruct_module(mp_obj_type_t * type) __attribute__((always_inline));
+
+
 inline abstract_module_t * new_abstruct_module(mp_obj_type_t * type){
     abstract_module_t * self = m_new_obj(abstract_module_t);
     self->base.type = type;
     return self;
 }
+
+
 
 #define m_generic_make(name)                                        \
 STATIC mp_obj_t name ## _obj_deinit(mp_obj_t self_in) {             \
@@ -100,6 +106,6 @@ NORETURN void mp_raise_RuntimeError(const char *msg);
 NORETURN void mp_raise_AttributeError(const char *msg) ;
 void normalize_buffer_bounds(int32_t* start, int32_t end, uint32_t* length);
 void generic_method_lookup(mp_obj_t obj, qstr attr, mp_obj_t *dest);
-
+void* mp_to_ptr(mp_obj_t self_in);
 
 #endif // MICROPY_INCLUDED_ATMEL_SAMD_COMMON_HAL_UTIL_H
